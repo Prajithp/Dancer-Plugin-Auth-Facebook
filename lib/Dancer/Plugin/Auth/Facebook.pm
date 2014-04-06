@@ -178,9 +178,10 @@ plugins:
     callback_url: "http://localhost:3000/auth/facebook/callback"
     callback_success: "/"
     callback_fail: "/fail"
+    scope: "email friends"
 
-C<callback_success> and C<callback_fail> are optional and default to
-'/' and '/fail', respectively.
+C<callback_success> , C<callback_fail> and <scope> are optional and default to
+'/' , '/fail', and default respectively.
 
 Note that you also need to provide your callback url, whose route handler is automatically
 created by the plugin.
