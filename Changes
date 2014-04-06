@@ -1,0 +1,7 @@
+Revision history for Perl extension Dancer::Plugin::Auth::Facebook.
+
+0.02  Sun Apr  6 10:51:50 2014  
+        - Fixed some minor bugs and updated pod
+
+0.01  Sun Apr  3  23:51:50 2014
+	- Very first version, just for own purpose
