@@ -255,8 +255,6 @@ Prajith Ndimensionz <prajith@ndimensionz>
 
 =item *
 
-Dancer Core Developers
-
 =back
 
 =head1 COPYRIGHT AND LICENSE
