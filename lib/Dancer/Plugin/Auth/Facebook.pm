@@ -104,6 +104,7 @@ get '/auth/facebook/callback' => sub {
 
 register_plugin;
 
+1;
 
 __END__
 
