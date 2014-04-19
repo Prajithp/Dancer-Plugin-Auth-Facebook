@@ -34,8 +34,7 @@ register 'auth_fb_init' => sub {
 
   if (defined $fb_scope) {
     foreach my $fs (split(/\s+/, $fb_scope)) {
-      chomp($fs);
-      next unless ($fs =~  m/^[A-Za-z0-9\.]+$/);
+      next unless ($fs =~  m/^[_A-Za-z0-9\.]+$/);
       push(@scope, $fs);
     }
   }
