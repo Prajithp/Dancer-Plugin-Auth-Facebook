@@ -1,0 +1,11 @@
+blib*
+*.swp
+*.bak
+Makefile
+Makefile.old
+_build*
+pm_to_blib*
+*.tar.gz
+cover_db
+.prove
+Dancer-Plugin-Auth-Facebook*
