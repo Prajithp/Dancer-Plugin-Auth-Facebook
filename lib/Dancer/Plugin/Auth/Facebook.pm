@@ -47,6 +47,8 @@ register 'auth_fb_init' => sub {
     croak "'$param' is expected but not found in configuration" unless $config->{$param};
   }
 
+  debug "new facebook with $application_id, $application_secret, $cb_url";
+
   $_FB = Net::Facebook::Oauth2->new(
     application_id => $application_id,  ##get this from your facebook developers platform
     application_secret => $application_secret, ##get this from your facebook developers platform
@@ -66,11 +68,13 @@ register 'auth_fb_authenticate_url' => sub {
   );
 
   session access_token  => '';
+  debug "fb_auth_url: $url";
 
   return $url;
 };
 
 get '/auth/facebook/callback' => sub {
+  debug "entering facebook callback";
 
   return redirect $cb_fail if (params->{'error'});
 
