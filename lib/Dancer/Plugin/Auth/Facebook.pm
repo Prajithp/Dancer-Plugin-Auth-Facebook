@@ -27,11 +27,11 @@ register 'auth_fb_init' => sub {
   $application_id       = $config->{application_id};
   $application_secret   = $config->{application_secret};
   $cb_url               = $config->{callback_url};
-  
+
   $cb_success           = $config->{callback_success} || '/';
   $cb_fail              = $config->{callback_fail} || '/fail';
   $fb_scope             = $config->{scope};
-  
+
   if (defined $fb_scope) {
     foreach my $fs (split(/\s+/, $fb_scope)) {
       chomp($fs);
@@ -42,11 +42,11 @@ register 'auth_fb_init' => sub {
   else {
     push(@scope, 'email');
   }
-  
+
   for my $param (qw/application_id application_secret callback_url/) {
     croak "'$param' is expected but not found in configuration" unless $config->{$param};
   }
-  
+
   $_FB = Net::Facebook::Oauth2->new(
     application_id => $application_id,  ##get this from your facebook developers platform
     application_secret => $application_secret, ##get this from your facebook developers platform
@@ -59,29 +59,29 @@ register 'auth_fb_authenticate_url' => sub {
   if (not defined FaceBook ) {
     croak "auth_fb_init must be called first";
   }
-  
+
   my $url = FaceBook->get_authorization_url(
-      scope => \@scope, 
+      scope => \@scope,
       display => 'page',
   );
-  
+
   session access_token  => '';
-  
-  return $url;  
+
+  return $url;
 };
 
 get '/auth/facebook/callback' => sub {
- 
+
   return redirect $cb_fail if (params->{'error'});
-  
+
   my $access_token = session('access_token');
-  
+
   if (!$access_token) {
     $access_token = FaceBook->get_access_token(code => params->{'code'});
     return $cb_fail if ! $access_token;
     session access_token  => $access_token;
   }
-  
+
   my $fb = Net::Facebook::Oauth2->new(
        access_token => $access_token,
   );
@@ -94,11 +94,11 @@ get '/auth/facebook/callback' => sub {
   my $username = $fb_hash->{'username'};
   my $name     = $fb_hash->{'name'};
   my $mail_add =  $fb_hash->{'email'};
-  
+
   session fb_username => $username;
   session fb_name     =>  $name;
   session fb_email    => $mail_add;
-  
+
   redirect $cb_success;
 };
 
