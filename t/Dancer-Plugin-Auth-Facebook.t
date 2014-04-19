@@ -45,7 +45,7 @@ package main;
 
     ok auth_fb_init(), 'able to load auth_fb_init()';
 
-    ok my $fb = FaceBook(), 'facebook object is available to apps';
+    ok my $fb = facebook(), 'facebook object is available to apps';
     isa_ok $fb, 'Net::Facebook::Oauth2';
 
     is auth_fb_authenticate_url(),

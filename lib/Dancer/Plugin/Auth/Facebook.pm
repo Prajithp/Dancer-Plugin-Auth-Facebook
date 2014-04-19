@@ -11,8 +11,8 @@ use Net::Facebook::Oauth2;
 use Carp 'croak';
 
 my $_FB;
-sub FaceBook { $_FB }
-register 'FaceBook' => \&FaceBook;
+sub facebook { $_FB }
+register 'facebook' => \&facebook;
 
 my $application_id;
 my $application_secret;
@@ -57,11 +57,11 @@ register 'auth_fb_init' => sub {
 };
 
 register 'auth_fb_authenticate_url' => sub {
-  if (not defined FaceBook ) {
+  if (not defined facebook ) {
     croak "auth_fb_init must be called first";
   }
 
-  my $url = FaceBook->get_authorization_url(
+  my $url = facebook->get_authorization_url(
       scope => \@scope,
       display => 'page',
   );
@@ -80,7 +80,7 @@ get '/auth/facebook/callback' => sub {
   my $access_token = session('access_token');
 
   if (!$access_token) {
-    $access_token = FaceBook->get_access_token(code => params->{'code'});
+    $access_token = facebook->get_access_token(code => params->{'code'});
     return $cb_fail if ! $access_token;
     session access_token  => $access_token;
   }
@@ -205,10 +205,10 @@ L<search the CPAN for new ones|http://search.cpan.org/search?query=Dancer-Sessio
 
 The plugin exports the following symbols to your application's namespace:
 
-=head2 FacebBook
+=head2 facebook
 
 The plugin uses a L<Net::Facebook::Oauth2> object to do its job. You can access this
-object with the C<FaceBook> symbol, exported by the plugin.
+object with the C<facebook> symbol, exported by the plugin.
 
 =head2 auth_fb_init
 
