@@ -93,14 +93,7 @@ get '/auth/facebook/callback' => sub {
       'https://graph.facebook.com/me',
   );
 
-  my $fb_hash  = $me->as_hash;
-  my $username = $fb_hash->{'username'};
-  my $name     = $fb_hash->{'name'};
-  my $mail_add =  $fb_hash->{'email'};
-
-  session fb_username => $username;
-  session fb_name     =>  $name;
-  session fb_email    => $mail_add;
+  session fb_user => $me->as_hash;
 
   redirect $cb_success;
 };
@@ -134,13 +127,13 @@ auth_fb_init();
 hook before =>  sub {
   #we don't want a redirect loop here.
   return if request->path =~ m{/auth/facebook/callback};
-  if (not session('fb_username')) {
+  if (not session('fb_user')) {
      redirect auth_fb_authenticate_url;
   }
 };
 
 get '/' => sub {
-  "welcome, ".session('fb_name');
+  "welcome, " . session('fb_user')->{name};
 };
 
 get '/fail' => sub { "FAIL" };
@@ -155,6 +148,10 @@ This plugin provides a simple way to authenticate your users through Facebook's
 OAuth API. It provides you with a helper to build easily a redirect to the
 authentication URL, defines automatically a callback route handler and saves the
 authenticated user to your session when done.
+
+The authenticated user information will be available as a hash reference under
+C<session('fb_user')>. Please refer to Facebook's documentation for all available
+data.
 
 =head1 PREREQUESITES
 
@@ -223,7 +220,7 @@ this function returns an authentication URL for redirecting unauthenticated user
 hook before => sub {
    # we don't want a redirect loop here.
   return if request->path =~ m{/auth/facebook/callback};
-  if (not session('fb_username')) {
+  if (not session('fb_user')) {
     redirect auth_fb_authenticate_url();
   }
 };

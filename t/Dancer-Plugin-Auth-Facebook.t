@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::More import => ['!pass'];
-plan tests => 13;
+plan tests => 11;
 
 package FBMock;
 use Test::More;
@@ -66,6 +66,9 @@ route_exists [ GET => '/auth/facebook/callback' ], 'facebook auth callback route
 my $res = dancer_response( GET => '/auth/facebook/callback' );
 is $res->status, 302, 'auth callback redirects user';
 
-is session('fb_username'), 'foo', 'got username from facebook mock';
-is session('fb_name'), 'bar', 'got name from facebook mock';
-is session('fb_email'), 'a@b.co', 'got email from facebook mock';
+is_deeply session('fb_user'), {
+    username => 'foo',
+    name     => 'bar',
+    email    => 'a@b.co',
+}, 'got data from facebook mock';
+
