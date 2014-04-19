@@ -29,7 +29,7 @@ register 'auth_fb_init' => sub {
   $cb_url               = $config->{callback_url};
 
   $cb_success           = $config->{callback_success} || '/';
-  $cb_fail              = $config->{callback_fail} || '/fail';
+  $cb_fail              = $config->{callback_fail}    || '/fail';
   $fb_scope             = $config->{scope};
 
   if (defined $fb_scope) {
@@ -62,7 +62,7 @@ register 'auth_fb_authenticate_url' => sub {
   }
 
   my $url = facebook->get_authorization_url(
-      scope => \@scope,
+      scope   => \@scope,
       display => 'page',
   );
 
@@ -82,7 +82,7 @@ get '/auth/facebook/callback' => sub {
   if (!$access_token) {
     $access_token = facebook->get_access_token(code => params->{'code'});
     return $cb_fail if ! $access_token;
-    session fb_access_token  => $access_token;
+    session fb_access_token => $access_token;
   }
 
   my $fb = Net::Facebook::Oauth2->new(
@@ -110,37 +110,30 @@ __END__
 
 Dancer::Plugin::Auth::Facebook - Authenticate with Facebook OAuth
 
-=head1 VERSION
-
-version 0.02
-
 =head1 SYNOPSIS
 
-package plugin::test;
-use Dancer ':syntax';
-use Dancer::Plugin::Auth::Facebook;
+    package plugin::test;
+    use Dancer ':syntax';
+    use Dancer::Plugin::Auth::Facebook;
 
-our $VERSION = '0.1';
+    auth_fb_init();
 
-auth_fb_init();
+    hook before =>  sub {
+      #we don't want a redirect loop here.
+      return if request->path =~ m{/auth/facebook/callback};
+      if (not session('fb_user')) {
+         redirect auth_fb_authenticate_url;
+      }
+    };
 
-hook before =>  sub {
-  #we don't want a redirect loop here.
-  return if request->path =~ m{/auth/facebook/callback};
-  if (not session('fb_user')) {
-     redirect auth_fb_authenticate_url;
-  }
-};
-
-get '/' => sub {
-  "welcome, " . session('fb_user')->{name};
-};
-
-get '/fail' => sub { "FAIL" };
-
-true;
-
-...
+    get '/' => sub {
+      "welcome, " . session('fb_user')->{name};
+    };
+    
+    get '/fail' => sub { "FAIL" };
+    
+    true;
+    
 
 =head1 CONCEPT
 
@@ -170,18 +163,18 @@ You need to configure the plugin first: copy your C<application_id> and C<applic
 (provided by Facebook) to your Dancer's configuration under
 C<plugins/Auth::Facebook>:
 
-# config.yml
-...
-plugins:
-  Auth::Facebook
-    application_id: "1234"
-    application_secret: "abcd"
-    callback_url: "http://localhost:3000/auth/facebook/callback"
-    callback_success: "/"
-    callback_fail: "/fail"
-    scope: "email friends"
+    # config.yml
+    ...
+    plugins:
+        'Auth::Facebook':
+            application_id:     "1234"
+            application_secret: "abcd"
+            callback_url:       "http://localhost:3000/auth/facebook/callback"
+            callback_success:   "/"
+            callback_fail:      "/fail"
+            scope:              "email friends"
 
-C<callback_success> , C<callback_fail> and <scope> are optional and default to
+C<callback_success> , C<callback_fail> and C<scope> are optional and default to
 '/' , '/fail', and 'email' respectively.
 
 Note that you also need to provide your callback url, whose route handler is automatically
@@ -250,11 +243,7 @@ L<Catalyst::Authentication::Credential::Twitter> written by Jesse Stay.
 
 =over 4
 
-=item *
-
-Prajith Ndimensionz <prajith@ndimensionz>
-
-=item *
+=item * Prajith Ndimensionz <prajith@ndimensionz>
 
 =back
 
