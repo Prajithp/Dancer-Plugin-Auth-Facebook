@@ -33,7 +33,7 @@ register 'auth_fb_init' => sub {
   $fb_scope             = $config->{scope};
   
   if (defined $fb_scope) {
-    foreach my $fs (split('\s', $fb_scope)) {
+    foreach my $fs (split(/\s+/, $fb_scope)) {
       chomp($fs);
       next unless ($fs =~  m/^[A-Za-z0-9\.]+$/);
       push(@scope, $fs);
