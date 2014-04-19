@@ -66,7 +66,7 @@ register 'auth_fb_authenticate_url' => sub {
       display => 'page',
   );
 
-  session access_token  => '';
+  session fb_access_token  => '';
   debug "fb_auth_url: $url";
 
   return $url;
@@ -77,12 +77,12 @@ get '/auth/facebook/callback' => sub {
 
   return redirect $cb_fail if (params->{'error'});
 
-  my $access_token = session('access_token');
+  my $access_token = session('fb_access_token');
 
   if (!$access_token) {
     $access_token = facebook->get_access_token(code => params->{'code'});
     return $cb_fail if ! $access_token;
-    session access_token  => $access_token;
+    session fb_access_token  => $access_token;
   }
 
   my $fb = Net::Facebook::Oauth2->new(
