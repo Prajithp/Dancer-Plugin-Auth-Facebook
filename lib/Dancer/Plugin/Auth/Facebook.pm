@@ -185,7 +185,7 @@ plugins:
     scope: "email friends"
 
 C<callback_success> , C<callback_fail> and <scope> are optional and default to
-'/' , '/fail', and default respectively.
+'/' , '/fail', and 'email' respectively.
 
 Note that you also need to provide your callback url, whose route handler is automatically
 created by the plugin.
