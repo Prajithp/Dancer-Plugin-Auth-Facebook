@@ -1,6 +1,6 @@
 package Dancer::Plugin::Auth::Facebook;
 
-$Dancer::Plugin::Auth::Facebook::VERSION = '0.02';
+$Dancer::Plugin::Auth::Facebook::VERSION = '0.03';
 
 use strict;
 use warnings;
