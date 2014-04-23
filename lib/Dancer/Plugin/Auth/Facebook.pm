@@ -75,13 +75,13 @@ register 'auth_fb_authenticate_url' => sub {
 get '/auth/facebook/callback' => sub {
   debug "entering facebook callback";
 
-  return redirect $cb_fail if (params->{'error'});
+  return redirect $cb_fail if (params->{'error'} || !params->{'code'});
 
   my $access_token = session('fb_access_token');
 
   if (!$access_token) {
     $access_token = facebook->get_access_token(code => params->{'code'});
-    return $cb_fail if ! $access_token;
+    return redirect $cb_fail unless $access_token;
     session fb_access_token => $access_token;
   }
 
