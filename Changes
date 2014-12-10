@@ -1,5 +1,8 @@
 Revision history for Perl extension Dancer::Plugin::Auth::Facebook.
 
+0.04
+    - updated meta resources for repo, bugtracker and license (garu)
+
 0.03
     - changed FaceBook() exported helper to facebook() (garu)
     - internal session handling using 'fb_' namespace (garu)
