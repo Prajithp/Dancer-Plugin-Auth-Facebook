@@ -14,6 +14,13 @@ WriteMakefile(
         'Carp' => 0,
         'Net::Facebook::Oauth2' => 0,
     },
+    META_MERGE => {
+        resources => {
+            license     => 'http://dev.perl.org/licenses/',
+            bugtracker  => 'https://github.com/Prajithp/Dancer-Plugin-Auth-Facebook/issues',
+            repository  => 'https://github.com/Prajithp/Dancer-Plugin-Auth-Facebook',
+        },
+    },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES    => 'Dancer-Plugin-Auth-Facebook*' },
 );

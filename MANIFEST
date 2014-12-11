@@ -1,6 +1,6 @@
 Changes
 Makefile.PL
 MANIFEST
-README
+README.md
 t/Dancer-Plugin-Auth-Facebook.t
 lib/Dancer/Plugin/Auth/Facebook.pm
