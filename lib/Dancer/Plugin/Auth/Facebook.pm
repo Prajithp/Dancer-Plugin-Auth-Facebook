@@ -85,7 +85,7 @@ get '/auth/facebook/callback' => sub {
     };
     if (!$access_token) {
       error "facebook error fetching access token: $@";
-      return $cb_fail;
+      return redirect $cb_fail;
     }
     session fb_access_token => $access_token;
   }
