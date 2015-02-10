@@ -1,6 +1,6 @@
 package Dancer::Plugin::Auth::Facebook;
 
-$Dancer::Plugin::Auth::Facebook::VERSION = '0.03';
+$Dancer::Plugin::Auth::Facebook::VERSION = '0.05';
 
 use strict;
 use warnings;
@@ -80,8 +80,13 @@ get '/auth/facebook/callback' => sub {
   my $access_token = session('fb_access_token');
 
   if (!$access_token) {
-    $access_token = facebook->get_access_token(code => params->{'code'});
-    return redirect $cb_fail unless $access_token;
+    eval {
+      $access_token = facebook->get_access_token(code => params->{'code'});
+    };
+    if (!$access_token) {
+      error "facebook error fetching access token: $@";
+      return redirect $cb_fail;
+    }
     session fb_access_token => $access_token;
   }
 
@@ -89,13 +94,19 @@ get '/auth/facebook/callback' => sub {
        access_token => $access_token,
   );
 
-  my $me = $fb->get(
-      'https://graph.facebook.com/me',
-  );
-
-  session fb_user => $me->as_hash;
-
-  redirect $cb_success;
+  my ($me, $fb_response);
+  eval {
+    $fb_response = $fb->get( 'https://graph.facebook.com/me' );
+    $me = $fb_response->as_hash;
+  };
+  if ($@ || !$me) {
+     error "error fetching facebook user: '$@' on response '$fb_response'";
+     return redirect $cb_fail;
+  }
+  else {
+    session fb_user => $me;
+    return redirect $cb_success;
+  }
 };
 
 register_plugin;
@@ -146,7 +157,7 @@ The authenticated user information will be available as a hash reference under
 C<session('fb_user')>. Please refer to Facebook's documentation for all available
 data.
 
-=head1 PREREQUESITES
+=head1 PREREQUISITES
 
 In order for this plugin to work, you need the following:
 
