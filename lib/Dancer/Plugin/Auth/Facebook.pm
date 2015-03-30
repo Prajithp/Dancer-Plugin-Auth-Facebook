@@ -260,7 +260,7 @@ L<Catalyst::Authentication::Credential::Twitter> written by Jesse Stay.
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Prajith Ndimensionz.
+This software is copyright (c) 2014-2015 by Prajith Ndimensionz.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
