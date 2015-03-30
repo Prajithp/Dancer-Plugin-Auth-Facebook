@@ -9,10 +9,10 @@ WriteMakefile(
     ABSTRACT_FROM => 'lib/Dancer/Plugin/Auth/Facebook.pm',
     PL_FILES      => {},
     PREREQ_PM     => {
-        'Dancer'  => 0,
-        'Dancer::Plugin' => 0,
-        'Carp' => 0,
-        'Net::Facebook::Oauth2' => 0,
+        'Dancer'                => 0,
+        'Dancer::Plugin'        => 0,
+        'Carp'                  => 0,
+        'Net::Facebook::Oauth2' => 0.09,
     },
     META_MERGE => {
         resources => {
