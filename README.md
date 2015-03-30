@@ -1,6 +1,8 @@
 Dancer-Plugin-Auth-Facebook
 ===========================
 
+[![Build Status](https://travis-ci.org/Prajithp/Dancer-Plugin-Auth-Facebook.svg?branch=master)](https://travis-ci.org/Prajithp/Dancer-Plugin-Auth-Facebook)
+
 This plugin provides a simple way to authenticate your users through Facebook's
 OAuth API. It provides you with a helper to build easily a redirect to the
 authentication URL, defines automatically a callback route handler and saves the
