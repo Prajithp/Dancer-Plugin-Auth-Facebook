@@ -96,7 +96,7 @@ get '/auth/facebook/callback' => sub {
 
   my ($me, $fb_response);
   eval {
-    $fb_response = $fb->get( 'https://graph.facebook.com/me' );
+    $fb_response = $fb->get( 'https://graph.facebook.com/v2.2/me' );
     $me = $fb_response->as_hash;
   };
   if ($@ || !$me) {
