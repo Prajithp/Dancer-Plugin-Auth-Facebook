@@ -9,7 +9,7 @@ authentication URL, defines automatically a callback route handler and saves the
 authenticated user to your session when done.
 
 The authenticated user information will be available as a hash reference under
-```session('fb_user')```. Please refer to Facebook's documentation for all available
+`session('fb_user')`. Please refer to Facebook's documentation for all available
 data.
 
 
@@ -30,7 +30,7 @@ When done, make sure to configure the application as a *Web* application.
 * Configuration
 
 You need to configure the plugin first: copy your *application_id* and *application_secret*
-(provided by Facebook) to your Dancer's configuration under ```plugins/Auth::Facebook```:
+(provided by Facebook) to your Dancer's configuration under `plugins/Auth::Facebook`:
 
     # config.yml
     ...
