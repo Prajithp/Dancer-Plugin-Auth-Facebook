@@ -1,5 +1,10 @@
 Revision history for Perl extension Dancer::Plugin::Auth::Facebook.
 
+0.06
+    - update code to use Facebook's Graph API v2.8 (garu)
+    - new 'fields' option to control what Facebook returns (garu)
+    - minor doc updates (garu)
+
 0.05
     - improved error handling (garu)
     - typo fixes (garu)

@@ -63,7 +63,7 @@ supported session engines, or [search the CPAN for new ones](http://search.cpan.
 COPYRIGHT AND LICENCE
 ---------------------
 
-Copyright (C) 2014-2015 by Prajith Ndimensionz
+Copyright (C) 2014-2016 by Prajith Ndimensionz
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
