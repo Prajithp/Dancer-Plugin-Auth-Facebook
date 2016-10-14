@@ -12,7 +12,7 @@ WriteMakefile(
         'Dancer'                => 0,
         'Dancer::Plugin'        => 0,
         'Carp'                  => 0,
-        'Net::Facebook::Oauth2' => 0.09,
+        'Net::Facebook::Oauth2' => 0.10,
     },
     META_MERGE => {
         resources => {

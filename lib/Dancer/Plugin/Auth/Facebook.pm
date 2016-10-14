@@ -96,7 +96,7 @@ get '/auth/facebook/callback' => sub {
 
   my ($me, $fb_response);
   eval {
-    $fb_response = $fb->get( 'https://graph.facebook.com/v2.2/me' );
+    $fb_response = $fb->get( 'https://graph.facebook.com/v2.8/me' );
     $me = $fb_response->as_hash;
   };
   if ($@ || !$me) {
@@ -154,8 +154,21 @@ authentication URL, defines automatically a callback route handler and saves the
 authenticated user to your session when done.
 
 The authenticated user information will be available as a hash reference under
-C<session('fb_user')>. Please refer to Facebook's documentation for all available
-data.
+C<session('fb_user')>. You should probably associate the C<id> field to that
+user, so you know which of your users just completed the login.
+
+Please refer to L<< Facebook's documentation | https://developers.facebook.com/docs/graph-api/reference/v2.8/user >>
+for all available data.
+
+=head1 FACEBOOK GRAPH API VERSION
+
+This module complies to Facebook Graph API version 2.8, the latest
+at the time of publication, B<< scheduled for deprecation on October 5th, 2018 >>.
+
+One month prior to that, Net::Facebook::Oauth2 (which this module uses to
+access Facebook's API) will trigger a warning message during your Dancer
+app's startup.
+
 
 =head1 PREREQUISITES
 
