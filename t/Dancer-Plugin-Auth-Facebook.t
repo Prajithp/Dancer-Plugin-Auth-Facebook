@@ -43,7 +43,7 @@ package main;
             callback_url       => 'http://myserver:3000/auth/facebook/callback',
             callback_success   => '/ok',
             callback_fail      => '/not-ok',
-            scope              => 'basic_info  email user_birthday',
+            scope              => 'basic_info email user_birthday',
         },
     });
 
