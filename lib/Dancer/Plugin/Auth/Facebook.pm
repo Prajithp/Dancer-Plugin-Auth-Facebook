@@ -21,6 +21,7 @@ my $cb_success;
 my $cb_fail;
 my $fb_scope;
 my @scope;
+my $me_fields;
 
 register 'auth_fb_init' => sub {
   my $config = plugin_setting;
@@ -31,6 +32,7 @@ register 'auth_fb_init' => sub {
   $cb_success           = $config->{callback_success} || '/';
   $cb_fail              = $config->{callback_fail}    || '/fail';
   $fb_scope             = $config->{scope};
+  $me_fields            = $config->{fields};
 
   if (defined $fb_scope) {
     foreach my $fs (split(/\s+/, $fb_scope)) {
@@ -96,7 +98,7 @@ get '/auth/facebook/callback' => sub {
 
   my ($me, $fb_response);
   eval {
-    $fb_response = $fb->get( 'https://graph.facebook.com/v2.8/me' );
+    $fb_response = $fb->get( 'https://graph.facebook.com/v2.8/me' . ($me_fields ? "?fields=$me_fields" : '') );
     $me = $fb_response->as_hash;
   };
   if ($@ || !$me) {
@@ -157,6 +159,12 @@ The authenticated user information will be available as a hash reference under
 C<session('fb_user')>. You should probably associate the C<id> field to that
 user, so you know which of your users just completed the login.
 
+The information under C<fb_user> is returned by the current user's basic
+endpoint, known on Facebook's API as C</me>. You should note that Facebook
+has a habit of changing which fields are returned on that endpoint. To force
+any particular fields, please use the C<fields> setting in your plugin
+configuration as shown below.
+
 Please refer to L<< Facebook's documentation | https://developers.facebook.com/docs/graph-api/reference/v2.8/user >>
 for all available data.
 
@@ -197,9 +205,10 @@ C<plugins/Auth::Facebook>:
             callback_success:   "/"
             callback_fail:      "/fail"
             scope:              "email friends"
+            fields:             "id,name,email"
 
-C<callback_success> , C<callback_fail> and C<scope> are optional and default to
-'/' , '/fail', and 'email' respectively.
+C<callback_success> , C<callback_fail>, C<scope> and C<fields> are optional
+and default to '/' , '/fail', 'email' and (empty) respectively.
 
 Note that you also need to provide your callback url, whose route handler is automatically
 created by the plugin.
