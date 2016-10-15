@@ -24,7 +24,7 @@ sub get {
   my ($self, $arg) = @_;
 
   isa_ok $self, 'Net::Facebook::Oauth2', 'FBMock: object checks ok';
-  is $arg, 'https://graph.facebook.com/v2.2/me', 'FBMock: arguments check on get()';
+  is $arg, 'https://graph.facebook.com/v2.8/me', 'FBMock: arguments check on get()';
 
   return bless {}, 'FBMock';
 }
@@ -43,7 +43,7 @@ package main;
             callback_url       => 'http://myserver:3000/auth/facebook/callback',
             callback_success   => '/ok',
             callback_fail      => '/not-ok',
-            scope              => 'basic_info  email user_birthday',
+            scope              => 'basic_info email user_birthday',
         },
     });
 
@@ -57,7 +57,7 @@ package main;
     isa_ok $fb, 'Net::Facebook::Oauth2';
 
     is auth_fb_authenticate_url(),
-       'https://www.facebook.com/v2.2/dialog/oauth?client_id=1234&redirect_uri=http%3A%2F%2Fmyserver%3A3000%2Fauth%2Ffacebook%2Fcallback&scope=basic_info,email,user_birthday&display=page',
+       'https://www.facebook.com/v2.8/dialog/oauth?client_id=1234&redirect_uri=http%3A%2F%2Fmyserver%3A3000%2Fauth%2Ffacebook%2Fcallback&scope=basic_info,email,user_birthday&display=page',
        'auth_fb_authenticate_url() returns the proper facebook auth url';
 }
 
