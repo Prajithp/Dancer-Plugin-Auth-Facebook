@@ -1,6 +1,6 @@
 package Dancer::Plugin::Auth::Facebook;
 
-$Dancer::Plugin::Auth::Facebook::VERSION = '0.06';
+$Dancer::Plugin::Auth::Facebook::VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -289,7 +289,7 @@ L<Catalyst::Authentication::Credential::Twitter> written by Jesse Stay.
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014-2016 by Prajith Ndimensionz.
+This software is copyright (c) 2014-2019 by Prajith Ndimensionz.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
